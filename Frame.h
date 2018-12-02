@@ -5,10 +5,12 @@
 #ifndef SLAM_FRAME_H
 #define SLAM_FRAME_H
 
+#include <opencv2/opencv.hpp>
 
 class Frame
 {
-
+public:
+    Frame(const cv::Mat im, const double timestamp);
 };
 
 

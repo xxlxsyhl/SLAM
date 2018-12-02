@@ -7,11 +7,23 @@
 
 #include <opencv2/opencv.hpp>
 
+#include "Map.h"
+#include "Frame.h"
+#include "Tracking.h"
+#include "LocalMap.h"
+#include "Initializer.h"
+
 class System
 {
 public:
     System();
-    int Track(cv::Mat im, double timestamp);
+    int Run(const cv::Mat im, const double timestamp);
+
+private:
+    Map* mpMap;
+    LocalMap* mpLocalMap;
+    Tracking* mpTracker;
+    Initializer* mpInitialzer;
 };
 
 

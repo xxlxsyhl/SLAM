@@ -3,3 +3,8 @@
 //
 
 #include "Frame.h"
+
+Frame::Frame(const cv::Mat im, const double timestamp)
+{
+
+}

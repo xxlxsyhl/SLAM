@@ -8,7 +8,8 @@
 
 class Map
 {
-
+public:
+    Map();
 };
 
 

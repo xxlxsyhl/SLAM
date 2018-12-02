@@ -5,10 +5,17 @@
 #ifndef SLAM_TRACKING_H
 #define SLAM_TRACKING_H
 
+#include "Frame.h"
+#include "LocalMap.h"
 
 class Tracking
 {
+public:
+    Tracking(LocalMap* pLocalMap);
+    int Run(const Frame& frame);
 
+private:
+    LocalMap* mpLocalMap;
 };
 
 
