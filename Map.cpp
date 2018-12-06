@@ -22,18 +22,21 @@ void Map::Save(const std::string &filename) const
     }
     MapPointIndex mpsize = mvpMapPoints.size();
     KeyFrameIndex kfsize = mvpKeyFrames.size();
-    out.write((char*)mpsize, sizeof(mpsize));
-    out.write((char*)kfsize, sizeof(kfsize));
+
+    out.write((char*)&mpsize, sizeof(MapPointIndex));
+    out.write((char*)&kfsize, sizeof(KeyFrameIndex));
 
     //MapPoints
-    std::for_each(mvpMapPoints.begin(), mvpMapPoints.end(), [&out](const MapPoint* pMP){
-        pMP->Save(out);
-    });
+    for(auto it = mvpMapPoints.begin(); it != mvpMapPoints.end(); it++)
+    {
+        (*it)->Save(out);
+    }
 
     //KeyFrames
-    std::for_each(mvpKeyFrames.begin(), mvpKeyFrames.end(), [&out](const KeyFrame* pKF){
-        pKF->Save(out);
-    });
+    for(auto it = mvpKeyFrames.begin(); it != mvpKeyFrames.end(); it++)
+    {
+        (*it)->Save(out);
+    }
 }
 
 
@@ -45,24 +48,35 @@ void Map::Load(const std::string &filename)
         std::cout<<"Map::Load:  file path error!"<<std::endl;
         exit(1);
     }
+
     MapPointIndex mpsize = 0;
     KeyFrameIndex kfsize = 0;
-    in.read((char*)mpsize, sizeof(mpsize));
-    in.read((char*)kfsize, sizeof(kfsize));
+    in.read((char*)&mpsize, sizeof(MapPointIndex));
+    in.read((char*)&kfsize, sizeof(KeyFrameIndex));
     mvpMapPoints.resize(mpsize, nullptr);
     mvpKeyFrames.resize(kfsize, nullptr);
 
+    for(auto it = mvpMapPoints.begin(); it != mvpMapPoints.end(); it++)
+    {
+        *it = new MapPoint(this);
+    }
+
+    for(auto it = mvpKeyFrames.begin(); it != mvpKeyFrames.end(); it++)
+    {
+        *it = new KeyFrame(this);
+    }
+
     //MapPoints
-    std::for_each(mvpMapPoints.begin(), mvpMapPoints.end(), [&in](MapPoint* &pMP){
-        pMP = new MapPoint();
-        pMP->Load(in);
-    });
+    for(auto it = mvpMapPoints.begin(); it != mvpMapPoints.end(); it++)
+    {
+        (*it)->Load(in);
+    }
 
     //KeyFrames
-    std::for_each(mvpKeyFrames.begin(), mvpKeyFrames.end(), [&in](KeyFrame* &pKF){
-        pKF = new KeyFrame();
-        pKF->Load(in);
-    });
+    for(auto it = mvpKeyFrames.begin(); it != mvpKeyFrames.end(); it++)
+    {
+        (*it)->Load(in);
+    }
 
     mbInited = true;
 }

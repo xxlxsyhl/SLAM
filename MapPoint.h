@@ -20,12 +20,13 @@ public:
     typedef unsigned int KeyFrameIndex;
 
 public:
-    MapPoint();
+    MapPoint(Map* pMap);
     MapPoint(const cv::Vec3d& p3d);
 
     void Save(std::ofstream& out) const;
     void Load(std::ifstream& in);
-private:
+
+public:
     //one point one descriptor
     cv::Vec3d mWorldCoord;
     cv::Mat mDescriptor;    //not necessary

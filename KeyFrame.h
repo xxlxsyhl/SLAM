@@ -19,12 +19,12 @@ public:
     typedef unsigned int MapPointIndex;
 
 public:
-    KeyFrame();
+    KeyFrame(Map* pMap);
 
     void Save(std::ofstream& out) const;
     void Load(std::ifstream& in);
 
-private:
+public:
     std::vector<MapPoint*> mvpMapPoints;
     std::vector<cv::Point2d> mvPoint2ds;
     cv::Mat mDescriptors;

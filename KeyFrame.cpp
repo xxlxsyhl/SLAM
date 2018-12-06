@@ -4,12 +4,13 @@
 
 #include "KeyFrame.h"
 
-KeyFrame::KeyFrame()
+KeyFrame::KeyFrame(Map* pMap):mpMap(pMap)
 {}
 
 void KeyFrame::Save(std::ofstream &out) const
 {
-    double K[9], Pose[12];
+    double K[9];
+    double Pose[12];
     for(int row = 0; row != 3; row++)
     {
         for(int col = 0; col != 3; col++)
@@ -24,8 +25,8 @@ void KeyFrame::Save(std::ofstream &out) const
     out.write((char*)K, sizeof(double)*9);
     out.write((char*)Pose, sizeof(double)*12);
 
-    auto size = mvPoint2ds.size();
-    out.write((char*)size, sizeof(size));
+    Map::MapPointIndex size = mvPoint2ds.size();
+    out.write((char*)&size, sizeof(Map::MapPointIndex));
 
     unsigned char* data = mDescriptors.data;
     for(auto ipt = 0; ipt != size; ++ipt)
@@ -39,13 +40,14 @@ void KeyFrame::Save(std::ofstream &out) const
         data += mDescriptors.step;
         //map point
         Map::MapPointIndex mpidx = mpMap->GetMapPointIndex(mvpMapPoints[ipt]);
-        out.write((char*)mpidx, sizeof(mpidx));
+        out.write((char*)&mpidx, sizeof(mpidx));
     }
 }
 
 void KeyFrame::Load(std::ifstream &in)
 {
-    double K[9], Pose[12];
+    double K[9];
+    double Pose[12];
     in.read((char*)K, sizeof(double)*9);
     in.read((char*)Pose, sizeof(double)*12);
     mK.create(3, 3, CV_64FC1);
@@ -64,7 +66,7 @@ void KeyFrame::Load(std::ifstream &in)
     mt.at<double>(2,0) = Pose[11];
 
     Map::KeyFrameIndex kfSize = 0;
-    in.read((char*)kfSize, sizeof(kfSize));
+    in.read((char*)&kfSize, sizeof(kfSize));
     mvpMapPoints.resize(kfSize);
     mvPoint2ds.resize(kfSize);
     mDescriptors.create(kfSize, 32, CV_8UC1);
@@ -80,7 +82,7 @@ void KeyFrame::Load(std::ifstream &in)
         data += mDescriptors.step;
         //map point
         Map::MapPointIndex mpidx = 0;
-        in.read((char*)mpidx, sizeof(mpidx));
+        in.read((char*)&mpidx, sizeof(mpidx));
         mvpMapPoints[ipt] = mpMap->GetMapPoint(mpidx);
     }
 }

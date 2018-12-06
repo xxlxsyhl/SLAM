@@ -34,7 +34,8 @@ public:
     KeyFrame* GetKeyFrame(const KeyFrameIndex kfidx) const;
 
     bool IsInitialized();
-private:
+
+public:
     std::vector<MapPoint*> mvpMapPoints;
     std::vector<KeyFrame*> mvpKeyFrames;
     bool mbInited;
