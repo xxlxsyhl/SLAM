@@ -17,13 +17,14 @@ class System
 {
 public:
     System();
+
     int Run(const cv::Mat im, const double timestamp);
 
 private:
     Map* mpMap;
     LocalMap* mpLocalMap;
     Tracking* mpTracker;
-    Initializer* mpInitialzer;
+    Initializer* mpInitializer;
 };
 
 

@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 3.12)
-project(Slam)
+project(hlslam)
 
 SET(CMAKE_BUILD_TYPE Release)
 
-
 set(CMAKE_CXX_STANDARD 14)
-set(PROJECT_BINARY_DIR ${PROJECT_SOURCE_DIR}/lib)
+set(LIBRARY_OUTPUT_PATH  ${PROJECT_SOURCE_DIR}/lib)
 
 find_package(OpenCV REQUIRED)
 find_package(Eigen3 REQUIRED)
@@ -20,7 +19,12 @@ set(SRC
     System.cpp
     Map.cpp
     Frame.cpp
+    KeyFrame.cpp
     Tracking.cpp
+    LocalMap.cpp
+    Initializer.cpp
+    Localizer.cpp
+    MapPoint.cpp
 )
 
 add_library(${PROJECT_NAME} ${SRC})

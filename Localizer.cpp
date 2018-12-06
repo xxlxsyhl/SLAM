@@ -8,3 +8,8 @@ Localizer::Localizer(Map* pMap)
 {
     mpMap = pMap;
 }
+
+int Localizer::Localize(const Frame &frame)
+{
+    return 1;
+}

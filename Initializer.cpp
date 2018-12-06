@@ -13,5 +13,9 @@ Initializer::Initializer(Map *pMap, LocalMap *pLocalMap)
 
 int Initializer::Initialize(const Frame &frame)
 {
-
+    int ret = mpLocalizer->Localize(frame);
+    if(ret == 1)
+    {
+        
+    }
 }

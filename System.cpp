@@ -11,7 +11,7 @@ System::System()
     mpMap = new Map();
     mpLocalMap = new LocalMap();
     mpTracker = new Tracking(mpLocalMap);
-    mpInitialzer = new Initializer(mpMap, mpLocalMap);
+    mpInitializer = new Initializer(mpMap, mpLocalMap);
 }
 
 int System::Run(const cv::Mat im, const double timestamp)
@@ -20,7 +20,7 @@ int System::Run(const cv::Mat im, const double timestamp)
 
     if(mpLocalMap->IsInitilized())
     {
-        mpInitialzer->Initialize(frame);
+        mpInitializer->Initialize(frame);
         return 1;
     }
 

@@ -6,11 +6,14 @@
 #define SLAM_LOCALIZER_H
 
 #include "Map.h"
+#include "Frame.h"
 
 class Localizer
 {
 public:
     Localizer(Map* pMap);
+
+    int Localize(const Frame& frame);
 
 private:
     Map* mpMap;
