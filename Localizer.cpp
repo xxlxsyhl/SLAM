@@ -11,5 +11,6 @@ Localizer::Localizer(Map* pMap)
 
 int Localizer::Localize(const Frame &frame)
 {
+
     return 1;
 }

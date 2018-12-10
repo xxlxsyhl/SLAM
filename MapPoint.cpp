@@ -10,6 +10,11 @@ MapPoint::MapPoint(Map* pMap):mpMap(pMap)
 MapPoint::MapPoint(const cv::Vec3d &p3d): mWorldCoord(p3d)
 {}
 
+cv::Vec3d MapPoint::GetWorldCoord()
+{
+    return mWorldCoord;
+}
+
 void MapPoint::Save(std::ofstream &out)const
 {
     double data[3];

@@ -12,6 +12,16 @@ Map::Map(const std::string &filename)
     Load(filename);
 }
 
+std::vector<MapPoint*> Map::GetAllMapPoints()
+{
+    return std::vector<MapPoint*>(mvpMapPoints.begin(), mvpMapPoints.end());
+}
+
+std::vector<KeyFrame*> Map::GetAllKeyFrames()
+{
+    return std::vector<KeyFrame*>(mvpKeyFrames.begin(), mvpKeyFrames.end());
+}
+
 void Map::Save(const std::string &filename) const
 {
     std::ofstream out(filename, std::ios::binary);
@@ -27,16 +37,14 @@ void Map::Save(const std::string &filename) const
     out.write((char*)&kfsize, sizeof(KeyFrameIndex));
 
     //MapPoints
-    for(auto it = mvpMapPoints.begin(); it != mvpMapPoints.end(); it++)
-    {
-        (*it)->Save(out);
-    }
+    std::for_each(mvpMapPoints.begin(), mvpMapPoints.end(), [&out](const MapPoint* pMP){
+        pMP->Save(out);
+    });
 
     //KeyFrames
-    for(auto it = mvpKeyFrames.begin(); it != mvpKeyFrames.end(); it++)
-    {
-        (*it)->Save(out);
-    }
+    std::for_each(mvpKeyFrames.begin(), mvpKeyFrames.end(), [&out](const KeyFrame* pKF){
+        pKF->Save(out);
+    });
 }
 
 
@@ -67,16 +75,14 @@ void Map::Load(const std::string &filename)
     }
 
     //MapPoints
-    for(auto it = mvpMapPoints.begin(); it != mvpMapPoints.end(); it++)
-    {
-        (*it)->Load(in);
-    }
+    std::for_each(mvpMapPoints.begin(), mvpMapPoints.end(), [&in](MapPoint* pMP){
+        pMP->Load(in);
+    });
 
     //KeyFrames
-    for(auto it = mvpKeyFrames.begin(); it != mvpKeyFrames.end(); it++)
-    {
-        (*it)->Load(in);
-    }
+    std::for_each(mvpKeyFrames.begin(), mvpKeyFrames.end(), [&in](KeyFrame* pKF){
+        pKF->Load(in);
+    });
 
     mbInited = true;
 }

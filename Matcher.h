@@ -6,11 +6,10 @@
 #define HLSLAM_MATCHER_H
 
 
-
-class Matcher {
+class Matcher
+{
 
 };
-
 
 
 #endif //HLSLAM_MATCHER_H

@@ -23,6 +23,10 @@ public:
     Map();
     Map(const std::string& filename);
 
+    //data
+    std::vector<MapPoint*> GetAllMapPoints();
+    std::vector<KeyFrame*> GetAllKeyFrames();
+
     //save
     void Save(const std::string& filename) const;
     void Load(const std::string& filename);

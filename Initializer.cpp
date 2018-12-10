@@ -16,6 +16,7 @@ int Initializer::Initialize(const Frame &frame)
     int ret = mpLocalizer->Localize(frame);
     if(ret == 1)
     {
-        
+        //initialize local map
+
     }
 }

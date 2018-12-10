@@ -8,6 +8,7 @@ set(LIBRARY_OUTPUT_PATH  ${PROJECT_SOURCE_DIR}/lib)
 
 find_package(OpenCV REQUIRED)
 find_package(Eigen3 REQUIRED)
+find_package(Pangolin REQUIRED)
 
 include_directories(
     ${PROJECT_SOURCE_DIR}
@@ -15,7 +16,18 @@ include_directories(
     ${OPENCV_INCLUDE_DIR}
 )
 
-set(SRC
+set(SRC_BOW
+    BowVector.cpp
+    Database.cpp
+    DescManip.cpp
+    FeatureVector.cpp
+    QueryResults.cpp
+    quicklz.c
+    ScoringObject.cpp
+    Vocabulary.cpp
+)
+
+set(SRC_SLAM
     System.cpp
     Map.cpp
     Frame.cpp
@@ -25,13 +37,16 @@ set(SRC
     Initializer.cpp
     Localizer.cpp
     MapPoint.cpp
+    Matcher.cpp
+    Viewer.cpp
 )
 
-add_library(${PROJECT_NAME} ${SRC})
+add_library(${PROJECT_NAME} ${SRC_SLAM} ${SEC_BOW})
 
 target_link_libraries(${PROJECT_NAME}
     ${OpenCV_LIBS}
     ${EIGEN3_LIBS}
+    ${Pangolin_LIBRARIES}
 )
 
 add_executable(test sample/main.cpp)

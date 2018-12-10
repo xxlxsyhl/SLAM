@@ -23,6 +23,8 @@ public:
     MapPoint(Map* pMap);
     MapPoint(const cv::Vec3d& p3d);
 
+    cv::Vec3d GetWorldCoord();
+
     void Save(std::ofstream& out) const;
     void Load(std::ifstream& in);
 
